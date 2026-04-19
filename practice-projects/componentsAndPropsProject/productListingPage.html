@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <style>
+    .productDetails>div{
+        border:5px dashed white;
+        width:200px
+    }
+    .productDetails>div>*{
+       text-align: center;
+    }
+    .productDetails>h2{
+        color:green
+    }
+    .productDetails{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1rem
+    }
+  </style>
+  <body>
+    <div class="js-container"></div>
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      const productArray = [
+        { name: "Gaming Laptop", price: 90000, inStock: true, ratings: 4 },
+        { name: "Gaming Pc", price: 190000, inStock: true, ratings: 4.5 },
+        { name: "Gaming Mouse", price: 4000, inStock: false, ratings: 3.9 },
+        { name: "RGB Keyboard", price: 6000, inStock: true, ratings: 3.7 },
+      ];
+      function ProductCard({ name, price, inStock, ratings }) {
+        console.log(inStock)
+        const InStockMessage = (inStock===true) ? "In Stock" : "Out of Stock";
+        console.log(typeof(inStock),InStockMessage)
+        return (
+          <div>
+            <h2>{name}</h2>
+            <p>price:₹ {price}</p>
+            {(inStock!==true)?<p style={{color:"red"}}>inStock: {InStockMessage}</p>:<p>inStock: {InStockMessage}</p>}
+            {(Number(ratings)>4)?<p>rate:{ratings} ⭐</p>:<p>rate:{ratings}</p>}
+          </div>
+        );
+      }
+      const products = (
+        <div className="productDetails">
+        
+         {productArray.map(({name,price,inStock,ratings})=><ProductCard name={name} price = {price} inStock={inStock} ratings={ratings}/>)}
+          
+        </div>
+      );
+      const container = document.querySelector(".js-container");
+
+      ReactDOM.createRoot(container).render(products);
+    </script>
+  </body>
+</html>

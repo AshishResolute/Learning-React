@@ -42,7 +42,7 @@
           <div>
             <h2>{name}</h2>
             <p>price:₹ {price}</p>
-            {(inStock!==true)?<p style={{color:"red"}}>inStock: {InStockMessage}</p>:<p>inStock: {InStockMessage}</p>}
+            {(inStock!==true)?<p style={{color:"red"}}>inStock: {InStockMessage}</p>:<p style={{color:"green"}}>inStock: {InStockMessage}</p>}
             {(Number(ratings)>4)?<p>rate:{ratings} ⭐</p>:<p>rate:{ratings}</p>}
           </div>
         );

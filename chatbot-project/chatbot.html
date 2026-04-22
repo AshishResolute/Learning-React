@@ -11,7 +11,7 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-      function ChatInput({currentChatMessages, setChatMessages}) {
+      function ChatInput({ currentChatMessages, setChatMessages }) {
         const [inputText, setInputText] = React.useState("");
         function saveInputText(event) {
           setInputText(event.target.value);
@@ -59,7 +59,7 @@
             ...currentChatMessages,
             {
               message: "Testing event Handler",
-              sender: "user",
+              sender: "bot",
               id: crypto.randomUUID,
             },
           ]);
@@ -78,14 +78,7 @@
         );
       }
       function App() {
-        let state = React.useState([
-          { message: "Hello chatbot", sender: "user", id: crypto.randomUUID() },
-          {
-            message: "Hello,How can i help You",
-            sender: "bot",
-            id: crypto.randomUUID(),
-          },
-        ]);
+        let state = React.useState([]);
         const currentChatMessages = state[0];
         const setChatMessages = state[1];
         return (

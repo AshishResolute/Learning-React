@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Exercise -1</title>
+</head>
+<style>
+    .taskBox {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin: 15px;
+        border: 3px solid white;
+    }
+</style>
+
+<body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        function TaskInput({ currentTasks, setTask }) {
+            const [inputTask, setTaskInput] = React.useState("");
+            function TaskInputValue(event) {
+                setTaskInput(event.target.value);
+            }
+            function addTask() {
+                if (inputTask.trim() === "") return alert(`Add an Task`);
+                setTask([
+                    ...currentTasks,
+                    { taskValue: inputTask, id: crypto.randomUUID() },
+                ]);
+            }
+            return (
+                <>
+                    <input
+                        type="text"
+                        placeholder="Enter Your Task Here"
+                        onChange={TaskInputValue}
+                    />
+                    <button onClick={addTask}>Add Task</button>
+                </>
+            );
+        }
+
+        function Tasks({ taskValue, currentTasks, setTask }) {
+            function deleteTask() {
+                const getTaskIdx = currentTasks.findIndex(
+                    (task) => task.taskValue === taskValue,
+                );
+                currentTasks.splice(getTaskIdx, 1)
+                setTask([...currentTasks]); // i can use setTask with just one parameter as well
+            }
+            return (
+                <div className="taskBox">
+                    <p>{taskValue}</p>
+                    <button onClick={deleteTask}>🗑</button>
+                </div>
+            );
+        }
+        function DisplayTasks({ currentTasks, setTask }) {
+            return (
+                <>
+                    {!currentTasks.length ? (
+                        <p>No Tasks, Add Something!</p>
+                    ) : (
+                        <span></span>
+                    )}
+                    <p>Tasks Pending:{currentTasks.length}</p>
+                    {currentTasks.map((task) => (
+                        <Tasks
+                            taskValue={task.taskValue}
+                            currentTasks={currentTasks}
+                            setTask={setTask}
+                        />
+                    ))}
+                </>
+            );
+        }
+        let App = () => {
+            const [currentTasks, setTask] = React.useState([]);
+            return (
+                <>
+                    <TaskInput currentTasks={currentTasks} setTask={setTask} />
+                    <DisplayTasks currentTasks={currentTasks} setTask={setTask} />
+                </>
+            );
+        };
+        const container = document.querySelector(".js-container");
+
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+</body>
+
+</html>

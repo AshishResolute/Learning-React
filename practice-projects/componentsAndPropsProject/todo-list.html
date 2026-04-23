@@ -31,7 +31,7 @@
                 if (inputTask.trim() === "") return alert(`Add an Task`);
                 setTask([
                     ...currentTasks,
-                    { taskValue: inputTask, id: crypto.randomUUID() },
+                    { taskValue: inputTask, taskId: crypto.randomUUID() },
                 ]);
             }
             return (
@@ -46,13 +46,10 @@
             );
         }
 
-        function Tasks({ taskValue, currentTasks, setTask }) {
+        function Tasks({ taskValue, currentTasks, setTask,taskId }) {
             function deleteTask() {
-                const getTaskIdx = currentTasks.findIndex(
-                    (task) => task.taskValue === taskValue,
-                );
-                currentTasks.splice(getTaskIdx, 1)
-                setTask([...currentTasks]); // i can use setTask with just one parameter as well
+                const pendingTasks = currentTasks.filter((task)=>task.taskId!==taskId)
+                setTask([...pendingTasks]); // i can use setTask with just one parameter as well
             }
             return (
                 <div className="taskBox">
@@ -73,6 +70,7 @@
                     {currentTasks.map((task) => (
                         <Tasks
                             taskValue={task.taskValue}
+                            taskId={task.taskId}
                             currentTasks={currentTasks}
                             setTask={setTask}
                         />
